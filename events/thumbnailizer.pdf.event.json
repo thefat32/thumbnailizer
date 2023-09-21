@@ -1,0 +1,4 @@
+{
+    "in_file": "/var/task/samples/sample_pdf.pdf",
+    "out_dir": "/tmp"
+}

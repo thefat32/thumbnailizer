@@ -1,0 +1,4 @@
+{
+    "in_file": "/var/task/samples/sample_mp4.mp4",
+    "out_dir": "/tmp"
+}

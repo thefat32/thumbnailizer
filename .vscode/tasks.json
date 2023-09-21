@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sam:thumbnailizer:debugger",
+            "type": "shell",
+            "command": "sam local invoke -d 5858 --event ${input:thumbnailizer-event} -t cdk.out/AwsLambdaThumbnailizerStack.template.json thumbnailizer-lambda --container-env-vars container_debug.env.json --debug-args '/var/lang/bin/python -m debugpy --listen 0.0.0.0:5858 --wait-for-client --log-to-stderr /var/runtime/bootstrap.py' --profile ${input:aws-profile}",
+            "problemMatcher": {
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "stubstubstub"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Invoking Container",
+                    "endsPattern": "wait_for_client",
+                }
+            },
+            "isBackground": true
+        }
+    ],
+    "inputs": [
+        {
+            "id": "aws-profile",
+            "type": "promptString",
+            "description": "AWS Profile",
+            "default": "habitar-dev"
+        },
+        {
+            "id": "thumbnailizer-event",
+            "type": "pickString",
+            "description": "Event",
+            "options": [
+                {
+                    "label": "jpg",
+                    "value": "events/thumbnailizer.jpg.event.json"
+                },
+                {
+                    "label": "mp4",
+                    "value": "events/thumbnailizer.mp4.event.json"
+                },
+                {
+                    "label": "mp4_multi",
+                    "value": "events/thumbnailizer.mp4.multi.event.json"
+                },
+                {
+                    "label": "odt",
+                    "value": "events/thumbnailizer.odt.event.json"
+                },
+                ,
+                {
+                    "label": "pdf",
+                    "value": "events/thumbnailizer.pdf.event.json"
+                }
+            ],
+            "default": "component"
+        },
+    ]
+}
