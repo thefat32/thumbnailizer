@@ -26,7 +26,6 @@ DEFAULT_OPTIONS = {
     'width': 300,
     'height': 300,
     'quality': 85,
-    'trim': False,
     'multi': False,
     'multi_size_max': 5
 }
@@ -52,7 +51,7 @@ def generate_thumbnail(input, output_dir, output_format, options=None):
     output_ext = output_format
     output = f'{output_dir}/{input_file_without_ext}{"-%03d" if options["multi"] else ""}.{output_format}'
 
-    imgcommand = f'convert {"-trim" if options["trim"] else ""} -quality {options["quality"]} -geometry {options["height"]} -extent {options["width"]}X{options["height"]} -colorspace RGB %s %s'
+    imgcommand = f'convert -quality {options["quality"]} -thumbnail \'{options["width"]}x{options["height"]}>\' -background black -gravity center -extent {options["width"]}X{options["height"]} -colorspace RGB %s %s'
 
     vidcommand = f'ffmpeg -y -i %s -vf "select=\'eq(pict_type,PICT_TYPE_I)\',scale=300:300:force_original_aspect_ratio=decrease,pad=300:300:(ow-iw)/2:(oh-ih)/2" -fps_mode vfr -frames:v {options["multi_size_max"] if options["multi"] else 1} %s'
 
